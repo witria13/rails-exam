@@ -1,8 +1,19 @@
 <div class="col-md-6 col-md-offset-3">
-	<%= form_for @thread do |f| %>
 	<div>
-		<h4 align="center" style=""><b>BUAT DISKUSI BARU</b></h4>	
+		<h4 align="center" style=""><b>BUAT DISKUSI BARU</b></h4></br>	
 	</div>
+
+
+	<% if @thread.errors.any? %>
+		<div class="alert alert-danger alert-dismissible">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">x</span></button>
+			<% @thread.errors.full_messages.each do |error| %>
+			<span><%= error %></span></br>
+			<% end %>
+		</div>
+	<% end %> 
+	<%= form_for @thread do |f| %>
+
 
 	<div class="form-group">
 		<%= f.label	:title%>
