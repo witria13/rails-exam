@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   root "forum_threads#index"
 
-  #RESOURCES DALAM RESOURSE
+  #RESOURCES DALAM RESOURCES
   resources :forum_threads, only: [:show, :new, :create] do
   	resources :forum_posts, only: [:create]
   end
