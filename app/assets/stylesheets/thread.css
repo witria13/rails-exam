@@ -1,3 +1,6 @@
+.buat {
+	margin-bottom: 30px;
+}
 .meta{
 	margin-bottom: 15px;
 }
@@ -14,4 +17,9 @@
 .thread{
 	margin-bottom: 20px;
 	border-bottom: 1px solid #000000;
+}
+
+.ikon{
+		float: right;	
+		margin-right: 12px;
 }

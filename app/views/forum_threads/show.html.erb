@@ -45,13 +45,12 @@
 		<%= form_for [@thread, @post] do |f| %>
 			<div class="form-group">
 				<%= f.label	:content%>
-				<%= f.text_area :content, rows:10, class: 'form-control' %>
+				<%= f.text_area :content, rows:10, class: 'form-control', placeholder: 'masukan tanggapan' %>
 			</div>
 
 			<div class="form-group">
 				<%= f.submit "Buat", class: 'btn btn-primary form-control' %>
 			</div>
-
 		<% end %>
 		<% end %>
 	</div>

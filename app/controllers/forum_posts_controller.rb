@@ -10,7 +10,7 @@ class ForumPostsController < ApplicationController
 		@post.user = current_user
 
 		if @post.save
-			redirect_to forum_thread_path(@thread)
+			redirect_to forum_thread_path(@thread) #forum_threads#show
 		else
 			render 'forum_threads/show'
 		end
