@@ -26,13 +26,13 @@
 
 				
 				<div class="ikon">
-					<% if user_signed_in? && current_user.level="admin" %>
+					<% if user_signed_in? && current_user.level!="user" %>
 					<%= link_to "", edit_forum_thread_path(t), class: 'glyphicon glyphicon-pencil' %>
 					<% end %>
 				</div>
 
 				<div class="ikon">
-					<% if user_signed_in? && current_user.level="admin" %>
+					<% if user_signed_in? && current_user.level!="user" %>
 					<%= link_to '', forum_thread_path(t), class: 'glyphicon glyphicon-trash', method: :delete, data: {confirm: 'Are you sure?'} %>
 					<% end %>
 				</div>
