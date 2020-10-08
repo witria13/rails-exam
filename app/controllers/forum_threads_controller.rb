@@ -1,6 +1,7 @@
 class ForumThreadsController < ApplicationController
 	before_action	:authenticate_user!, only: [:new, :create, :edit]
 	THREADS_PER_PAGE	= 10
+	POSTS_PER_PAGE		= 5
 
 	def index
 		@threads = ForumThread.order(id: :desc)
@@ -10,7 +11,10 @@ class ForumThreadsController < ApplicationController
 
 	def show
 		@thread = ForumThread.find(params[:id])
-		@post = ForumPost.new
+		@post 	= ForumPost.new
+		@page 	= params.fetch(:page, 0).to_i
+		@posts  = @thread.forum_posts.offset(@page*POSTS_PER_PAGE).limit(POSTS_PER_PAGE)
+
 	end
 
 	def new
