@@ -25,6 +25,11 @@
 					<div class="content">
 						<%= p.content %>	
 					</div>
+
+					<% if user_signed_in? && (current_user.level == "admin" or current_user.id == p.user_id) %>
+					<%= link_to '', forum_thread_forum_post_path(@thread, p), class: 'glyphicon glyphicon-trash', method: :delete, data: {confirm: 'Are you sure?'} %>
+					<% end %>
+
 				</div>
 			<% end %>
 		<% else %>

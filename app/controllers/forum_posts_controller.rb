@@ -1,12 +1,12 @@
 class ForumPostsController < ApplicationController
 
-	before_action	:authenticate_user!, only: [:create]	
+	before_action	:authenticate_user!, only: [:create, :destroy]	
 
 	def create
 		@thread = ForumThread.find(params[:forum_thread_id])
-		@post 	= ForumPost.new(resource_params)
+		@post 	= @thread.forum_posts.new(resource_params)
 
-		@post.forum_thread = @thread
+		# @post.forum_thread = @thread
 		@post.user = current_user
 
 		if @post.save
@@ -15,6 +15,13 @@ class ForumPostsController < ApplicationController
 			render 'forum_threads/show'
 		end
 	end
+
+	def destroy
+		@post = ForumPost.find(params[:id])
+    	@post.destroy
+    	flash[:notice]  = "Post dengan id #{params[:id]} telah dihapus"
+    	redirect_to root_path
+  	end 
 
 	private
 
