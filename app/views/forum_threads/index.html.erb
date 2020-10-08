@@ -41,5 +41,10 @@
 
 			</div>
 		<% end %>
+
+		<div align="center">
+			<%= link_to "Last page", root_path(page: @page-1) %> |
+			<%= link_to "Next page", root_path(page: @page+1) %>
+		</div>
 	</div>
 </div>
