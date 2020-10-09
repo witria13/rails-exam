@@ -17,6 +17,12 @@ class ForumThreadsController < ApplicationController
 
 	end
 
+	def dashboard
+		
+		@page 	 = params.fetch(:page, 0).to_i
+		@threads = ForumThread.offset(@page*THREADS_PER_PAGE).limit(THREADS_PER_PAGE)
+	end
+
 	def new
 		@thread =  ForumThread.new
 	end

@@ -1,4 +1,4 @@
-<h2 align="center"><b>HOMEPAGE</b></h2>
+<h2 align="center"><b>DASHBOARD</b></h2>
 
 <div class='row'>
 	<div class='col-md-6 col-md-offset-3'>
@@ -9,8 +9,9 @@
 		<% end %>
 		</div> 
 
-		<% @threads.where(status: "approved").each do |t| %>
 
+	<% if user_signed_in? && current_user.level == "admin" %>
+		<% @threads.each do |t| %>
 			<div class="thread">
 				<h4><%= link_to t.title.titleize, forum_thread_path(t) %></h4>
 
@@ -28,25 +29,23 @@
 
 				
 				<div class="ikon">
-					<% if user_signed_in? && (current_user.level == "admin" or current_user.id == t.user_id) %>
 					<%= link_to "", edit_forum_thread_path(t), class: 'glyphicon glyphicon-pencil' %>
-					<% end %>
 				</div>
 
 				<div class="ikon">
-					<% if user_signed_in? && (current_user.level == "admin" or current_user.id == t.user_id) %>
 					<%= link_to '', forum_thread_path(t), class: 'glyphicon glyphicon-trash', method: :delete, data: {confirm: 'Are you sure?'} %>
-					<% end %>
 				</div>
 
 				<div style="clear: both"></div>
 
+		
 			</div>
 		<% end %>
-
-		<div align="center">
-			<%= link_to "Last page", root_path(page: @page-1) %> |
-			<%= link_to "Next page", root_path(page: @page+1) %>
-		</div>
+			
+			<div align="center">
+				<%= link_to "Last page", forum_threads_dashboard_path(page: @page-1) %> |
+				<%= link_to "Next page", forum_threads_dashboard_path(page: @page+1) %>
+			</div>
+		<% end %>
 	</div>
 </div>
