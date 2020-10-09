@@ -1,12 +1,12 @@
 class ForumThreadsController < ApplicationController
-	before_action	:authenticate_user!, only: [:new, :create, :edit]
+	before_action	:authenticate_user!, only: [:new, :create, :edit, :dashboard]
 	THREADS_PER_PAGE	= 10
 	POSTS_PER_PAGE		= 5
 
 	def index
-		@threads = ForumThread.order(id: :desc)
 		@page 	 = params.fetch(:page, 0).to_i
-		@threads = ForumThread.offset(@page*THREADS_PER_PAGE).limit(THREADS_PER_PAGE)
+		@threads = ForumThread.order(id: :desc).offset(@page*THREADS_PER_PAGE)
+		                      .limit(THREADS_PER_PAGE)
 	end
 
 	def show
@@ -18,9 +18,10 @@ class ForumThreadsController < ApplicationController
 	end
 
 	def dashboard
-		
 		@page 	 = params.fetch(:page, 0).to_i
-		@threads = ForumThread.offset(@page*THREADS_PER_PAGE).limit(THREADS_PER_PAGE)
+		@thread  = current_user.forum_threads
+							   .offset(@page * THREADS_PER_PAGE)
+							   .limit(THREADS_PER_PAGE)
 	end
 
 	def new
