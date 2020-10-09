@@ -7,7 +7,7 @@
 		<% end %>
 		</div> 
 
-		<% @threads.each do |t| %>
+		<% @threads.where(status: "approved").each do |t| %>
 
 			<div class="thread">
 				<h4><%= link_to t.title.titleize, forum_thread_path(t) %></h4>
