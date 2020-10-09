@@ -1,51 +1,83 @@
 <h2 align="center"><b>DASHBOARD</b></h2>
 
 <div class='row'>
-	<div class='col-md-6 col-md-offset-3'>
+  <div class='col-md-6 col-md-offset-3'>
+      <div class="buat">
+        <% if user_signed_in? %>
+          <%= link_to "Buat Diskusi", new_forum_thread_path, class: 'btn btn-info' %>
+        <% end %>
+      </div> 
+    <% if user_signed_in? && current_user.level == "admin" %>
+      <% debugger %>
+      <% @threads.each do |t| %>
+        <div class="thread">
+          <h4><b><%= link_to t.title.titleize, forum_thread_path(t) %></b></h4>
 
-		<div class="buat">
-		<% if user_signed_in? %>
-		<%= link_to "Buat Diskusi", new_forum_thread_path, class: 'btn btn-info' %>
-		<% end %>
-		</div> 
+          <div class="meta">
+            status    : <%= t.status %> </br>
+            <%= I18n.l (t.created_at.to_date)%> oleh <%= t.user.name %>
+          </div>
 
+          <div class="content">
+            <%= t.content %>  
+          </div>
 
-	<% if user_signed_in? && current_user.level == "admin" %>
-		<% @threads.each do |t| %>
-			<div class="thread">
-				<h4><%= link_to t.title.titleize, forum_thread_path(t) %></h4>
+          <div class="count">
+            <%= t.forum_posts_count %> obrolan
+          </div>
 
-				<div class="meta">
-					<%= I18n.l (t.created_at.to_date)%> oleh <%= t.user.name %>
-				</div>
+          <div class="ikon">
+            <%= link_to "", edit_forum_thread_path(t), class: 'glyphicon glyphicon-pencil' %>
+          </div>
 
-				<div class="content">
-					<%= t.content %>	
-				</div>
+          <div class="ikon">
+            <%= link_to '', forum_thread_path(t), class: 'glyphicon glyphicon-trash', method: :delete, data: {confirm: 'Are you sure?'} %>
+          </div>
 
-				<div class="count">
-					<%= t.forum_posts_count %> obrolan
-				</div>
+          <div style="clear: both"></div>
+        </div>
+      <% end %>
+    <% elsif user_signed_in? && current_user.level == "user"%>
+      <% @thread.each do |t| %>
+        <% if current_user == t.user %>
 
-				
-				<div class="ikon">
-					<%= link_to "", edit_forum_thread_path(t), class: 'glyphicon glyphicon-pencil' %>
-				</div>
+          <div class="thread">
+            <h4><b><%= link_to t.title.titleize, forum_thread_path(t) %></b></h4>
 
-				<div class="ikon">
-					<%= link_to '', forum_thread_path(t), class: 'glyphicon glyphicon-trash', method: :delete, data: {confirm: 'Are you sure?'} %>
-				</div>
+            <div class="meta">
+              status    : <%= t.status %> </br>
+              <%= I18n.l (t.created_at.to_date)%> oleh <%= t.user.name %>
+            </div>
 
-				<div style="clear: both"></div>
+            <div class="content">
+              <%= t.content %>  
+            </div>
 
-		
-			</div>
-		<% end %>
-			
-			<div align="center">
-				<%= link_to "Last page", forum_threads_dashboard_path(page: @page-1) %> |
-				<%= link_to "Next page", forum_threads_dashboard_path(page: @page+1) %>
-			</div>
-		<% end %>
-	</div>
+            <div class="count">
+              <%= t.forum_posts_count %> obrolan
+            </div>
+
+            
+            <div class="ikon">
+              <%= link_to "", edit_forum_thread_path(t), class: 'glyphicon glyphicon-pencil' %>
+            </div>
+
+            <div class="ikon">
+              <%= link_to '', forum_thread_path(t), class: 'glyphicon glyphicon-trash', method: :delete, data: {confirm: 'Are you sure?'} %>
+            </div>
+
+            <div style="clear: both"></div>
+          </div>
+        <% end %>
+      <% end %>
+    <% end %>
+    <div align="center">
+      <% if @page == 0 %>
+        <%= link_to "Next page", forum_threads_dashboard_path(page: @page+1) %>
+      <% else %>
+        <%= link_to "Last page", forum_threads_dashboard_path(page: @page-1) %> |
+        <%= link_to "Next page", forum_threads_dashboard_path(page: @page+1) %>
+      <% end %>
+    </div>
+  </div>
 </div>
